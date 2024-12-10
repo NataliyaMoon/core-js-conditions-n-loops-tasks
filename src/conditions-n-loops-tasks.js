@@ -512,10 +512,11 @@ function getNearestBigger(number) {
     right -= 1;
   }
 
-  let result = 0;
-  digits.forEach(function (digit) {
-    result = result * 10 + digit;
-  });
+  function addDigitToResult(acc, digit) {
+    return acc * 10 + digit;
+  }
+
+  const result = digits.reduce(addDigitToResult, 0);
 
   return result;
 }

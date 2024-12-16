@@ -419,8 +419,24 @@ function getSpiralMatrix(size) {
  *    [7, 8, 9]         [9, 6, 3]
  *  ]                 ]
  */
-function rotateMatrix(/* matrix */) {
-  throw new Error('Not implemented');
+function rotateMatrix(matrix) {
+  const a = matrix.length;
+  const m = matrix;
+  let t;
+  for (let i = 0; i < a / 2; i += 1) {
+    for (let j = 0; j < a - i - i - 1; j += 1) {
+      t = m[i + j][a - 1 - i];
+      m[i + j][a - 1 - i] = m[i][i + j];
+      m[i][i + j] = t;
+      t = m[a - 1 - i][a - 1 - i - j];
+      m[a - 1 - i][a - 1 - i - j] = m[i][i + j];
+      m[i][i + j] = t;
+      t = m[a - 1 - i - j][i];
+      m[a - 1 - i - j][i] = m[i][i + j];
+      m[i][i + j] = t;
+    }
+  }
+  return m;
 }
 
 /**
@@ -437,8 +453,26 @@ function rotateMatrix(/* matrix */) {
  *  [2, 9, 5, 9]    => [2, 5, 9, 9]
  *  [-2, 9, 5, -3]  => [-3, -2, 5, 9]
  */
-function sortByAsc(/* arr */) {
-  throw new Error('Not implemented');
+function sortByAsc(arr) {
+  const result = arr;
+  if (arr.length <= 1) return arr;
+  const pivot = arr[0];
+  let left = [];
+  let right = [];
+  for (let i = 1; i < arr.length; i += 1) {
+    if (arr[i] < pivot) {
+      left[left.length] = arr[i];
+    } else {
+      right[right.length] = arr[i];
+    }
+  }
+  left = sortByAsc(left);
+  right = sortByAsc(right);
+  const sorted = [...left, pivot, ...right];
+  for (let i = 0; i < result.length; i += 1) {
+    result[i] = sorted[i];
+  }
+  return result;
 }
 
 /**
@@ -458,8 +492,26 @@ function sortByAsc(/* arr */) {
  *  '012345', 3 => '024135' => '043215' => '031425'
  *  'qwerty', 3 => 'qetwry' => 'qtrewy' => 'qrwtey'
  */
-function shuffleChar(/* str, iterations */) {
-  throw new Error('Not implemented');
+function shuffleChar(str, iterations) {
+  let s = str;
+  let a = iterations;
+  while (a) {
+    let e = '';
+    let o = '';
+    for (let i = 0; i < s.length; i += 1) {
+      if (i % 2) {
+        o += s[i];
+      } else {
+        e += s[i];
+      }
+    }
+    s = `${e}${o}`;
+    a -= 1;
+    if (s === str) {
+      return shuffleChar(str, iterations % (iterations - a));
+    }
+  }
+  return s;
 }
 
 /**
